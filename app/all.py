@@ -1,4 +1,4 @@
-from flask import current_app, Blueprint
+from flask import current_app, Blueprint, render_template, request
 import os
 from .tasks import make_file, requester
 
@@ -13,9 +13,13 @@ def makefile(fname, content):
     make_file.delay(fpath, content)
     return(f"find your file @ <code>{fpath}</code>")
 
-@bp.route("/test")
-def test():
-    message = "this is a test"
-    phonenumbers = "+61412145110"
+@bp.route("/sms", methods=["POST"])
+def test(message, phonenumbers):
+    message = request.get["message"]
+    phonenumbers = request.get["phonenumbers"]
     requester.delay(message, phonenumbers)
-    return("done")
+    return("test sent to task queue")
+
+@bp.route("/portal")
+def portal():
+    return render_template("portal.html")
