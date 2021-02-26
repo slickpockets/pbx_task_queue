@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    portal
+{% endblock %}
+
+{% block main %}
+    <form action="/sms" method="post">
+      <div class="form-group">
+          <textarea class="form-control" id="message" name="message" placeholder="Message" size="160"></textarea>
+      </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" id="phonenumbers" name="phonenumbers" placeholder="Phonenumbers" type="text">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" id="password" name="password" placeholder="password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">submit</button>
+    </form>
+
+{% endblock %}
