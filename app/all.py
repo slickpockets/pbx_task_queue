@@ -1,6 +1,14 @@
 from flask import current_app, Blueprint, render_template, request, redirect
 import os
 from .tasks import requester
+import phonenumbers
+
+def format_numbers(phonenumbers):
+    s = ""
+    for match in phonenumbers.PhoneNumberMatcher(data["phonenumbers"], "AU"):
+        s += phonenumbers.format_number(match.number, phonenumbers.PhoneNumberFormat.E164) + ","
+
+    return(s)
 
 bp = Blueprint("all", __name__)
 @bp.route("/")
@@ -30,7 +38,10 @@ def test():
             if not password:
                 return("no password")
 
-        requester.delay(message, phonenumbers, password)
+        normalize_phonenumbers = format_numbers(phonenumbers)
+
+        print(message, normalize_phonenumbers, password)
+        #requester.delay(message, phonenumbers, password)
         return("done")
     else:
         return redirect('/portal')
