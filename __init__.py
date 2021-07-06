@@ -1,4 +1,4 @@
-from flask import Flask
+from quart import Quart
 from celery import Celery
 
 def make_celery(app=None):
@@ -19,7 +19,7 @@ def make_celery(app=None):
     return celery
 
 def create_app():
-    app = Flask(__name__)
+    app = Quart(__name__)
     celery = make_celery(app)
     from app.all import bp
     app.register_blueprint(bp)

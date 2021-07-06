@@ -1,7 +1,8 @@
-from flask import current_app, Blueprint, render_template, request, redirect
+from quart import current_app, Blueprint, render_template, request, redirect
 import os
 from .tasks import requester
 import phonenumbers
+from app import db
 
 def format_numbers(phonenumbers):
     s = ""
@@ -14,6 +15,12 @@ bp = Blueprint("all", __name__)
 @bp.route("/")
 def index():
     return "hello"
+
+@bp.route('/incoming', methods=["POST"])
+def incoming():
+    data = request.get_json()
+    reply, phone, timedate = data["reply"], data["phone"], data["timedate"]
+
 
 
 

@@ -1,16 +1,5 @@
 from celery import Celery
 import redis
-import os
-for line in open('.env'):
-        var = line.strip().split('=')
-        if len(var) == 2:
-            os.environ[var[0]] = var[1].replace("\"", "")
-
-
-redis_pass= os.environ['REDISPASS']
-redis_server = os.environ['REDISURL']
-redis_port = os.environ['REDISPORT']
-redis_db = os.environ['REDISDB']
 
 def setupdb(url, password, db, port):
     db = redis.StrictRedis(
@@ -30,4 +19,3 @@ def make_celery(app_name =__name__):
 
 
 db = setupdb(redis_server, redis_pass, redis_port, redis_db)
-celery = make_celery()
